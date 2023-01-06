@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+require_relative '../lib/GameStudio/game'
+
+
+
+knuckleheads =  Studio::Game.new("Knuckleheads")
+default_player_file =
+    File.join(File.dirname(__FILE__), 'players.csv')
+knuckleheads.load_player(ARGV.shift || default_player_file)
+
+
+loop do
+    print "How many rounds ? ('quit' to exit) : "
+    round = gets.chomp.downcase
+    puts "Enjoy your #{round} rounds..."
+
+    case round
+    when /^\d+$/
+        knuckleheads.play(round.to_i)
+    when 'quit', 'exit'
+        knuckleheads.print_status
+        break
+    else
+        puts"Please enter a number or 'quit' "
+    end
+end
+
+knuckleheads.save_player
+
+
+
+
+
+
+
